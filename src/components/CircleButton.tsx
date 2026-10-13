@@ -1,5 +1,6 @@
 import { View, Pressable, StyleSheet } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { EPN_THEME } from '@/theme/epnTheme';
 
 type Props = {
   onPress: () => void;
@@ -8,8 +9,14 @@ type Props = {
 export default function CircleButton({ onPress }: Props) {
   return (
     <View style={styles.circleButtonContainer}>
-      <Pressable style={styles.circleButton} onPress={onPress}>
-        <MaterialIcons name="add" size={38} color="#25292e" />
+      <Pressable
+        style={({ pressed }) => [
+          styles.circleButton,
+          pressed && { opacity: 0.85 },
+        ]}
+        onPress={onPress}
+      >
+        <MaterialIcons name="add" size={38} color={EPN_THEME.colors.primary} />
       </Pressable>
     </View>
   );
@@ -21,7 +28,7 @@ const styles = StyleSheet.create({
     height: 84,
     marginHorizontal: 60,
     borderWidth: 4,
-    borderColor: '#ffd33d',
+    borderColor: EPN_THEME.colors.accent,
     borderRadius: 42,
     padding: 3,
   },
@@ -30,6 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 42,
-    backgroundColor: '#fff',
+    backgroundColor: EPN_THEME.colors.surface,
   },
 });
+

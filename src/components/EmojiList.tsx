@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ImageSourcePropType, StyleSheet, FlatList, Platform, Pressable } from 'react-native';
 import { Image } from 'expo-image';
+import { EPN_THEME } from '@/theme/epnTheme';
 
 type Props = {
   onSelect: (image: ImageSourcePropType) => void;
@@ -25,10 +26,15 @@ export default function EmojiList({ onSelect, onCloseModal }: Props) {
       contentContainerStyle={styles.listContainer}
       renderItem={({ item, index }) => (
         <Pressable
+          style={({ pressed }) => [
+            styles.itemCard,
+            pressed && styles.itemCardPressed,
+          ]}
           onPress={() => {
             onSelect(item);
             onCloseModal();
-          }}>
+          }}
+        >
           <Image source={item} key={index} style={styles.image} />
         </Pressable>
       )}
@@ -38,16 +44,26 @@ export default function EmojiList({ onSelect, onCloseModal }: Props) {
 
 const styles = StyleSheet.create({
   listContainer: {
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    paddingHorizontal: 20,
-    flexDirection: 'row',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     alignItems: 'center',
-    justifyContent: 'space-between',
+  },
+  itemCard: {
+    backgroundColor: EPN_THEME.colors.background,
+    borderWidth: 1,
+    borderColor: EPN_THEME.colors.border,
+    borderRadius: EPN_THEME.radius.md,
+    padding: 8,
+    marginRight: 14,
+    ...EPN_THEME.shadows.card,
+  },
+  itemCardPressed: {
+    borderColor: EPN_THEME.colors.accent,
+    transform: [{ scale: 0.96 }],
   },
   image: {
-    width: 100,
-    height: 100,
-    marginRight: 20,
+    width: 80,
+    height: 80,
   },
 });
+

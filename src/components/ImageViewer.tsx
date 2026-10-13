@@ -1,5 +1,6 @@
-import { ImageSourcePropType, StyleSheet } from 'react-native';
+import { ImageSourcePropType, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
+import { EPN_THEME } from '@/theme/epnTheme';
 
 type Props = {
   imgSource: ImageSourcePropType;
@@ -7,16 +8,26 @@ type Props = {
 };
 
 export default function ImageViewer({ imgSource, selectedImage }: Props) {
+  const img = selectedImage ? { uri: selectedImage } : imgSource;
 
-  const img = selectedImage ? { uri: selectedImage } : imgSource
-
-  return <Image source={img} style={styles.image} />;
+  return (
+    <View style={styles.imageWrapper}>
+      <Image source={img} style={styles.image} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
+  imageWrapper: {
+    borderRadius: EPN_THEME.radius.lg,
+    overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: EPN_THEME.colors.border,
+    backgroundColor: EPN_THEME.colors.surface,
+  },
   image: {
-    width: 300,
-    height: 400,
-    borderRadius: 18,
+    width: 320,
+    height: 440,
   },
 });
+
